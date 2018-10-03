@@ -30,6 +30,10 @@
                     </li>
                 </ul>
             </div>
+            
+        </div>
+        <div v-if="error" class="alert alert-danger" role="alert">
+            {{ error }}
         </div>
     </div>
 </template>
@@ -50,6 +54,7 @@
                 minChars: this.minLetters, // Minimum number of letters to run API request
                 limit: this.maxItems, // Maximum items to display
                 selectFirst: false, // Disable auto selection of 1st address
+                error: false, // Response error message
             };
         },
 
@@ -65,6 +70,7 @@
         methods: {
             // Debounced API request function
             debouncedUpdate: _debounce(function() {
+                this.error = false;
                 this.update();
             }, 500),
             
@@ -73,10 +79,11 @@
                 if (data && data.items) {
                     return data.items;
                 } else {
+                    this.loading = false
                     if (data.error) {
-                        console.error(data.error);
+                        this.error = data.error;
                     } else {
-                        console.error('Неизвестная ошибка');
+                        this.error = 'Неизвестная ошибка';
                     }
                 }
             },
@@ -90,6 +97,7 @@
             onReset() {
                 this.reset();
                 this.current = -1;
+                this.error = false;
                 this.$emit('select', null);
             },
             
@@ -104,6 +112,9 @@
 </script>
 
 <style>
+    .alert {
+        margin-top: 20px;
+    }
     .suggestions {
         position: absolute;
         width: 100%;

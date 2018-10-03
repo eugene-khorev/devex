@@ -18,7 +18,6 @@ Route::prefix('v1')->group(function() {
     // Autocomplete API request
     Route::get('autocomplete', function (Request $request) {
         // Setup initial values
-        $status = 200;
         $result = [];
         $address = $request->get('address');
         
@@ -45,10 +44,9 @@ Route::prefix('v1')->group(function() {
             }
         } catch (Exception $ex) {
             // Generate error response
-            $status = 500;
             $result['error'] = $ex->getMessage();
         }
         
-        return new JsonResponse($result, $status);
+        return new JsonResponse($result);
     })->name('autocomplete');
 });
