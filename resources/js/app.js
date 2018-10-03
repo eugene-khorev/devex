@@ -9,13 +9,19 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+Vue.prototype.$http = axios;
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+const { yandexMap, ymapMarker } = require('vue-yandex-maps');
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('yandex-map', yandexMap);
+Vue.component('yandex-map-marker', ymapMarker);
+Vue.component('autocomplete-form', require('./components/AutocompleteForm.vue'));
+Vue.component('autocomplete-input', require('./components/AutocompleteInput.vue'));
 
 const app = new Vue({
     el: '#app'

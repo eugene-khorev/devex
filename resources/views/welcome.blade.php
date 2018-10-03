@@ -13,7 +13,7 @@
     </head>
     <body>
         <div id="app">
-            <example-component></example-component>
+            <autocomplete-form :lang="{{ json_encode(trans('app.form')) }}"></autocomplete-form>
         </div>
     </body>
 </html>
