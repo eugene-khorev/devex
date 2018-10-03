@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use Illuminate\Http\{ Request, JsonResponse };
 use \Yandex\Geo\Api as GeoApi;
 
 /*
@@ -16,14 +16,15 @@ use \Yandex\Geo\Api as GeoApi;
 
 Route::prefix('v1')->group(function() {
     Route::get('autocomplete', function (Request $request) {
+        $status = 200;
         $result = [];
         $address = $request->get('address');
         
         try {
-            $api = new GeoApi();
-            $api->setQuery($address);
+            $api = new GeoApi(config('geo.version'));
             $api->setLimit(config('geo.result.limit'));
             $api->setLang(config('geo.lang'));
+            $api->setQuery($address);
             $api->load();
 
             $predictions = $api->getResponse()->getList();
@@ -38,9 +39,10 @@ Route::prefix('v1')->group(function() {
                 ];
             }
         } catch (Exception $ex) {
+            $status = 500;
             $result['error'] = $ex->getMessage();
         }
         
-        return $result;
-    });
+        return new JsonResponse($result, $status);
+    })->name('autocomplete');
 });
