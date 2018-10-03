@@ -6,7 +6,7 @@
                     <div class="card-header">{{ lang.header }}</div>
 
                     <div class="card-body">
-                        <form>
+                        <form @submit.prevent="">
                             <div class="form-group row">
                                 <div class="col-sm">
                                     <autocomplete-input 

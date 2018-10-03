@@ -14195,27 +14195,37 @@ var render = function() {
             "div",
             { staticClass: "card-body" },
             [
-              _c("form", [
-                _c("div", { staticClass: "form-group row" }, [
-                  _c(
-                    "div",
-                    { staticClass: "col-sm" },
-                    [
-                      _c("autocomplete-input", {
-                        attrs: {
-                          url: _vm.url,
-                          property: _vm.property,
-                          "min-letters": _vm.minLetters,
-                          "max-items": _vm.maxItems,
-                          placeholder: _vm.lang.type_address
-                        },
-                        on: { select: _vm.addressSelected }
-                      })
-                    ],
-                    1
-                  )
-                ])
-              ]),
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c(
+                      "div",
+                      { staticClass: "col-sm" },
+                      [
+                        _c("autocomplete-input", {
+                          attrs: {
+                            url: _vm.url,
+                            property: _vm.property,
+                            "min-letters": _vm.minLetters,
+                            "max-items": _vm.maxItems,
+                            placeholder: _vm.lang.type_address
+                          },
+                          on: { select: _vm.addressSelected }
+                        })
+                      ],
+                      1
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _vm.mapCoords
                 ? _c(
