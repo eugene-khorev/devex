@@ -68,7 +68,7 @@ class ApiTest extends TestCase
         
         $response = $this->makeRequest('nevermind');
 
-        $response->assertStatus(500);
+        $response->assertStatus(200);
         $response->assertJsonStructure([ 'error' ]);
     }
     
