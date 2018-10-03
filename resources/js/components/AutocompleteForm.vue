@@ -41,24 +41,28 @@
 
 <script>
     export default {
-        props: [ 'lang' ],
+        props: [ 'lang' ], // Language strings for localization
         
         data: function () {
             return {
-                url: '/api/v1/autocomplete',
-                property: 'address',
-                minLetters: 3,
-                maxItems: 6,
-                requestDelay: 1000,
-                mapCoords: null,
-                mapZoom: 10,
+                url: '/api/v1/autocomplete', // API autocomplete url
+                property: 'address', // API request GET parameter name
+                minLetters: 3, // Minimum number of letters to run API request
+                maxItems: 6, // Maximum items to display
+                requestDelay: 1000, // Debounce timeout (milliseconds)
+                mapCoords: null, // Map coordinates
+                mapZoom: 10, // Map scale
             };
         },
         
         methods: {
+            // Event handler for address selection
             addressSelected: function (data) {
                 if (data) {
+                    // Set map coordinates
                     this.mapCoords = [ data.latitude, data.longitude ];
+                    
+                    // Set map scale
                     switch (data.kind) {
                         case 'house':
                         case 'metro':

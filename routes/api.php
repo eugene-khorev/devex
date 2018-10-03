@@ -15,20 +15,25 @@ use \Yandex\Geo\Api as GeoApi;
 */
 
 Route::prefix('v1')->group(function() {
+    // Autocomplete API request
     Route::get('autocomplete', function (Request $request) {
+        // Setup initial values
         $status = 200;
         $result = [];
         $address = $request->get('address');
         
         try {
+            // Request GeoApi
             $api = new GeoApi(config('geo.version'));
             $api->setLimit(config('geo.result.limit'));
             $api->setLang(config('geo.lang'));
             $api->setQuery($address);
             $api->load();
 
+            // Get GeoApi results
             $predictions = $api->getResponse()->getList();
             
+            // Generate API response
             $result['items'] = [];
             foreach ($predictions as $item) {
                 $result['items'][] = [
@@ -39,6 +44,7 @@ Route::prefix('v1')->group(function() {
                 ];
             }
         } catch (Exception $ex) {
+            // Generate error response
             $status = 500;
             $result['error'] = $ex->getMessage();
         }

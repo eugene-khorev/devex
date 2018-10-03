@@ -39,21 +39,22 @@
     import VueTypeahead from 'vue-typeahead';
 
     export default {
-        extends: VueTypeahead,
+        extends: VueTypeahead, // Helper mixin
 
         props: ['url', 'property', 'placeholder', 'minLetters', 'maxItems'],
 
         data() {
             return {
-                src: this.url,
-                queryParamName: this.property,
-                minChars: this.minLetters,
-                limit: this.maxItems,
-                selectFirst: false,
+                src: this.url,  // // API autocomplete url
+                queryParamName: this.property, // API request GET parameter name
+                minChars: this.minLetters, // Minimum number of letters to run API request
+                limit: this.maxItems, // Maximum items to display
+                selectFirst: false, // Disable auto selection of 1st address
             };
         },
 
         watch: {
+            // Watches 'item' property to reset selection
             items() {
                 if (this.current < 0) {
                     this.$emit('select', null);
@@ -62,10 +63,12 @@
         },
 
         methods: {
+            // Debounced API request function
             debouncedUpdate: _debounce(function() {
                 this.update();
             }, 500),
             
+            // Check response error
             prepareResponseData(data) {
                 if (data && data.items) {
                     return data.items;
@@ -78,16 +81,19 @@
                 }
             },
             
+            // Removes drop-down address list
             onBlur() {
                 this.items = [];
             },
             
+            // Resets input field
             onReset() {
                 this.reset();
                 this.current = -1;
                 this.$emit('select', null);
             },
             
+            // Adress selection event handler
             onHit(item) {
                 this.query = item.address;
                 this.$emit('select', item);
