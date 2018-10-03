@@ -31,6 +31,7 @@ Route::prefix('v1')->group(function() {
             $result['items'] = [];
             foreach ($predictions as $item) {
                 $result['items'][] = [
+                    'kind' => $item->getKind(),
                     'address' => $item->getAddress(),
                     'latitude' => $item->getLatitude(),
                     'longitude' => $item->getLongitude(),
