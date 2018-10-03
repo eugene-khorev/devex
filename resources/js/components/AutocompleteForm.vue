@@ -80,10 +80,6 @@
                 }
                 
             },
-    
-            showMap: function (event) {
-                console.log('showMap');
-            },
         },
         
     }

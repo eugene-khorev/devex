@@ -18,7 +18,7 @@
 
                     <template v-else>
                         <i class="fa fa-search" v-show="isEmpty"></i>
-                        <i class="fa fa-times" v-show="isDirty" @click="reset"></i>
+                        <i class="fa fa-times" v-show="isDirty" @click="onReset"></i>
                     </template>
                 </span>
             </div>
@@ -80,6 +80,12 @@
             
             onBlur() {
                 this.items = [];
+            },
+            
+            onReset() {
+                this.reset();
+                this.current = -1;
+                this.$emit('select', null);
             },
             
             onHit(item) {
